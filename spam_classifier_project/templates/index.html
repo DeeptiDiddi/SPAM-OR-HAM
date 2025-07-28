@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spam Message Classifier</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h2>📧 Spam Message Classifier</h2>
+  <input type="text" id="message" placeholder="Enter your message" size="50">
+  <button onclick="checkSpam()">Check</button>
+  <div id="result"></div>
+
+  <script>
+    async function checkSpam() {
+      const msg = document.getElementById("message").value;
+      const res = await fetch("/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: msg })
+      });
+
+      const data = await res.json();
+      document.getElementById("result").innerText = data.prediction;
+    }
+  </script>
+</body>
+</html>
